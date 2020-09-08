@@ -1,0 +1,53 @@
+plugins {
+    id 'application'
+    id 'java'
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+ext['hibernate.version'] = '5.4.21.Final'
+ext['postgresql.version'] = '42.2.16'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    //Managed by Spring BOM
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    //Managed by Spring BOM
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework:spring-tx'
+    compileOnly 'javax.persistence:javax.persistence-api'
+    implementation 'org.hibernate:hibernate-core'
+    implementation 'org.postgresql:postgresql'
+}
+
+springBoot {
+    mainClassName = 'org.example.hibernate.pgsql.clob.TestApplication'
+}
+
+application {
+    mainClassName = springBoot.mainClassName
+}
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(Test) {
+        systemProperty "file.encoding", "UTF-8"
+    }
+}
+
+jar.dependsOn bootJar

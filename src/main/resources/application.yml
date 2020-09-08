@@ -1,0 +1,24 @@
+spring:
+  jpa:
+    show-sql: false
+    generate-ddl: true
+    hibernate.ddl-auto: create
+#    database-platform: org.example.hibernate.pgsql.clob.TestApplication$PGSQLClobToTextDialect
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    properties:
+      hibernate:
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 500
+          fetch_size: 500
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+
+test:
+  entries: 1000
+  length: 512
+  iterations: 5
